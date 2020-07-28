@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72C92A3224CFC9E00067C47C /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C92A3124CFC9E00067C47C /* GalleryTableViewCell.swift */; };
+		72C92A3424CFCB170067C47C /* ARQuickLookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C92A3324CFCB170067C47C /* ARQuickLookController.swift */; };
+		72C92A3924CFCF0B0067C47C /* COVID-19-1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 72C92A3624CFCF090067C47C /* COVID-19-1.usdz */; };
+		72C92A3A24CFCF0B0067C47C /* COVID-19-2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 72C92A3724CFCF0A0067C47C /* COVID-19-2.usdz */; };
+		72C92A3B24CFCF0B0067C47C /* COVID-19-struct.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 72C92A3824CFCF0B0067C47C /* COVID-19-struct.usdz */; };
 		932242871FD7958600F97F5D /* SCNNodeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932242861FD7958600F97F5D /* SCNNodeHelpers.swift */; };
 		93935D631FD4C6ED0040A6A8 /* RWLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93935D621FD4C6ED0040A6A8 /* RWLabel.swift */; };
 		93C2FC241F91690C003C03F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2FC231F91690C003C03F5 /* AppDelegate.swift */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		72C92A3124CFC9E00067C47C /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
+		72C92A3324CFCB170067C47C /* ARQuickLookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ARQuickLookController.swift; sourceTree = "<group>"; tabWidth = 4; };
+		72C92A3624CFCF090067C47C /* COVID-19-1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "COVID-19-1.usdz"; sourceTree = "<group>"; };
+		72C92A3724CFCF0A0067C47C /* COVID-19-2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "COVID-19-2.usdz"; sourceTree = "<group>"; };
+		72C92A3824CFCF0B0067C47C /* COVID-19-struct.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "COVID-19-struct.usdz"; sourceTree = "<group>"; };
 		932242861FD7958600F97F5D /* SCNNodeHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SCNNodeHelpers.swift; sourceTree = "<group>"; tabWidth = 4; };
 		93935D621FD4C6ED0040A6A8 /* RWLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = RWLabel.swift; sourceTree = "<group>"; tabWidth = 4; };
 		93C2FC201F91690C003C03F5 /* CFR Hack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CFR Hack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +55,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72C92A3024CFC99B0067C47C /* CustomThings */ = {
+			isa = PBXGroup;
+			children = (
+				72C92A3124CFC9E00067C47C /* GalleryTableViewCell.swift */,
+			);
+			path = CustomThings;
+			sourceTree = "<group>";
+		};
+		72C92A3524CFCEF40067C47C /* USDZ */ = {
+			isa = PBXGroup;
+			children = (
+				72C92A3624CFCF090067C47C /* COVID-19-1.usdz */,
+				72C92A3724CFCF0A0067C47C /* COVID-19-2.usdz */,
+				72C92A3824CFCF0B0067C47C /* COVID-19-struct.usdz */,
+			);
+			path = USDZ;
+			sourceTree = "<group>";
+		};
 		93935D611FD4C6B40040A6A8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,9 +105,12 @@
 		93C2FC221F91690C003C03F5 /* Portal */ = {
 			isa = PBXGroup;
 			children = (
+				72C92A3524CFCEF40067C47C /* USDZ */,
+				72C92A3024CFC99B0067C47C /* CustomThings */,
 				93935D611FD4C6B40040A6A8 /* Helpers */,
 				93C2FC231F91690C003C03F5 /* AppDelegate.swift */,
 				93C2FC251F91690C003C03F5 /* PortalViewController.swift */,
+				72C92A3324CFCB170067C47C /* ARQuickLookController.swift */,
 				93C2FC271F91690C003C03F5 /* Main.storyboard */,
 				93C2FC2A1F91690C003C03F5 /* Assets.xcassets */,
 				93C2FC2C1F91690C003C03F5 /* LaunchScreen.storyboard */,
@@ -153,6 +184,9 @@
 				93C2FC2B1F91690C003C03F5 /* Assets.xcassets in Resources */,
 				93C2FC691F942E23003C03F5 /* Assets.scnassets in Resources */,
 				93C2FC291F91690C003C03F5 /* Main.storyboard in Resources */,
+				72C92A3A24CFCF0B0067C47C /* COVID-19-2.usdz in Resources */,
+				72C92A3B24CFCF0B0067C47C /* COVID-19-struct.usdz in Resources */,
+				72C92A3924CFCF0B0067C47C /* COVID-19-1.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,11 +198,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C2FC261F91690C003C03F5 /* PortalViewController.swift in Sources */,
+				72C92A3224CFC9E00067C47C /* GalleryTableViewCell.swift in Sources */,
 				93C2FC361F925494003C03F5 /* SCNVector3Extension.swift in Sources */,
 				932242871FD7958600F97F5D /* SCNNodeHelpers.swift in Sources */,
 				93C2FC651F94273E003C03F5 /* FloatingPointExtension.swift in Sources */,
 				93C2FC241F91690C003C03F5 /* AppDelegate.swift in Sources */,
 				93935D631FD4C6ED0040A6A8 /* RWLabel.swift in Sources */,
+				72C92A3424CFCB170067C47C /* ARQuickLookController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
