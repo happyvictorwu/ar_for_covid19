@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72A2740224D0C14A00DD7E76 /* harrypotter.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 72A2740124D0C14A00DD7E76 /* harrypotter.mp4 */; };
+		72A2740424D0DD1000DD7E76 /* Coronavirus_Explained_WSYD.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 72A2740324D0DD1000DD7E76 /* Coronavirus_Explained_WSYD.mp4 */; };
 		72C92A3224CFC9E00067C47C /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C92A3124CFC9E00067C47C /* GalleryTableViewCell.swift */; };
 		72C92A3424CFCB170067C47C /* ARQuickLookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C92A3324CFCB170067C47C /* ARQuickLookController.swift */; };
 		72C92A3924CFCF0B0067C47C /* COVID-19-1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 72C92A3624CFCF090067C47C /* COVID-19-1.usdz */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		72A2740124D0C14A00DD7E76 /* harrypotter.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harrypotter.mp4; sourceTree = "<group>"; };
+		72A2740324D0DD1000DD7E76 /* Coronavirus_Explained_WSYD.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Coronavirus_Explained_WSYD.mp4; sourceTree = "<group>"; };
 		72C92A3124CFC9E00067C47C /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
 		72C92A3324CFCB170067C47C /* ARQuickLookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ARQuickLookController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		72C92A3624CFCF090067C47C /* COVID-19-1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "COVID-19-1.usdz"; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		93C2FC221F91690C003C03F5 /* Portal */ = {
 			isa = PBXGroup;
 			children = (
-				72A2740124D0C14A00DD7E76 /* harrypotter.mp4 */,
+				72A2740324D0DD1000DD7E76 /* Coronavirus_Explained_WSYD.mp4 */,
 				72C92A3524CFCEF40067C47C /* USDZ */,
 				72C92A3024CFC99B0067C47C /* CustomThings */,
 				93935D611FD4C6B40040A6A8 /* Helpers */,
@@ -185,8 +185,8 @@
 			files = (
 				93C2FC2E1F91690C003C03F5 /* LaunchScreen.storyboard in Resources */,
 				93C2FC2B1F91690C003C03F5 /* Assets.xcassets in Resources */,
-				72A2740224D0C14A00DD7E76 /* harrypotter.mp4 in Resources */,
 				93C2FC691F942E23003C03F5 /* Assets.scnassets in Resources */,
+				72A2740424D0DD1000DD7E76 /* Coronavirus_Explained_WSYD.mp4 in Resources */,
 				93C2FC291F91690C003C03F5 /* Main.storyboard in Resources */,
 				72C92A3A24CFCF0B0067C47C /* COVID-19-2.usdz in Resources */,
 				72C92A3B24CFCF0B0067C47C /* COVID-19-struct.usdz in Resources */,

@@ -35,7 +35,7 @@ class PortalViewController: UIViewController {
     var focusNode: SCNNode!
     var portalNode: SCNNode?
     var appState: State = .detectSurface
-    var isPortalPlaced = false
+//    var isPortalPlaced = false
     var debugPlanes: [SCNNode] = []
 //    var viewCenter: CGPoint {
 //        let viewBounds = view.bounds
@@ -187,32 +187,30 @@ class PortalViewController: UIViewController {
     func makeVideo() -> SCNNode {
         let node = SCNNode()
         
-        let videoNode = SKVideoNode(fileNamed: "harrypotter.mp4")
+        let videoNode = SKVideoNode(fileNamed: "Coronavirus_Explained_WSYD.mp4")
+        videoNode.yScale = -1.0
         
-        videoNode.play()
-        
-        let videoScene = SKScene(size: CGSize(width: 480, height: 360))
+        let videoScene = SKScene(size: CGSize(width: 1280, height: 720))
         videoScene.scaleMode = .aspectFit
+        videoScene.backgroundColor = .clear
         
         
         videoNode.position = CGPoint(x: videoScene.size.width / 2, y: videoScene.size.height / 2)
         videoNode.size = videoScene.size
-        videoScene.backgroundColor = .clear
-        videoNode.yScale = -1.0
         
         videoScene.addChild(videoNode)
         
         
-        let plane = SCNPlane(width: CGFloat(0.11866), height: CGFloat(0.076))
+        let plane = SCNPlane(width: CGFloat(0.88), height: CGFloat(0.51))
 //        let plane = SCNPlane(width: videoScene.size.width / 2, height: videoScene.size.height / 2)
         
         plane.firstMaterial?.diffuse.contents = videoScene
         
         let planeNode = SCNNode(geometry: plane)
-        
-//        planeNode.eulerAngles.x = .pi
-        
+        planeNode.eulerAngles.x = -.pi / 10
         node.addChildNode(planeNode)
+        
+        videoNode.play()
         
         return node
     }
@@ -260,6 +258,10 @@ class PortalViewController: UIViewController {
         
         addDoorway(node: portal)
         placeLightSource(rootNode: portal)
+        
+        let videoNode = makeVideo()
+        videoNode.position = SCNVector3(0, POSITION_Y + 1.7, POSITION_Z - 0.2)
+        portal.addChildNode(videoNode)
         return portal
     }
     
