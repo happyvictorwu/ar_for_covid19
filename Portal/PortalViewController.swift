@@ -2,10 +2,21 @@ import ARKit
 import UIKit
 
 class PortalViewController: UIViewController {
+    
+    // MARK: - Outlets
+    
     @IBOutlet var crosshair: UIView!
-    @IBOutlet var sceneView: ARSCNView?
+    @IBOutlet var sceneView: ARSCNView!
     @IBOutlet var messageLabel: UILabel?
     @IBOutlet var sessionStateLabel: UILabel?
+    
+    // MARK: - Actions
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Property
     
     var portalNode: SCNNode?
     var isPortalPlaced = false
@@ -21,29 +32,78 @@ class PortalViewController: UIViewController {
     let DOOR_WIDTH: CGFloat = 1.0
     let DOOR_HEIGHT: CGFloat = 2.4
     
+    // MARK: - View Management
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         resetLabels()
-        runSession()
+        
+        initSceneView()
+        initScene()
+        initARSession()
     }
     
-    func runSession() {
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        configuration.isLightEstimationEnabled = true
-        
-        sceneView?.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("*** ViewWillAppear()")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("*** ViewWillDisappear()")
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("*** DidReceiveMemoryWarning()")
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    // MARK: - Initialization
+    
+    func initSceneView() {
+        sceneView.delegate = self
+        //sceneView.showsStatistics = true
         #if DEBUG
-        sceneView?.debugOptions = [SCNDebugOptions.showFeaturePoints]
+        sceneView.debugOptions = [
+            ARSCNDebugOptions.showFeaturePoints,
+            ARSCNDebugOptions.showWorldOrigin,
+            SCNDebugOptions.showBoundingBoxes,
+            SCNDebugOptions.showWireframe
+        ]
         #endif
         
-        sceneView?.delegate = self
+//        focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
+//        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    func initScene() {
+        let scene = SCNScene()
+        sceneView.scene = scene
+        //scene.lightingEnvironment.contents = "PokerDice.scnassets/Textures/Environment_CUBE.jpg"
+        //scene.lightingEnvironment.intensity = 2
+        scene.physicsWorld.speed = 1
+        scene.physicsWorld.timeStep = 1.0 / 60.0
+    }
+    
+    func initARSession() {
+        guard ARWorldTrackingConfiguration.isSupported else {
+            print("*** ARConfig: AR World Tracking Not Supported")
+            return
+        }
+        
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = .horizontal
+        config.isLightEstimationEnabled = true
+        sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
     }
     
     func resetLabels() {
         messageLabel?.alpha = 1.0
-        messageLabel?.text = "点屏幕，放置"
+        messageLabel?.text = "touch screen to place"
         sessionStateLabel?.alpha = 0.0
         sessionStateLabel?.text = ""
     }
@@ -210,6 +270,8 @@ extension PortalViewController: ARSCNViewDelegate {
             self.removeAllNodes()
             self.resetLabels()
         }
-        runSession()
+        initSceneView()
+        initScene()
+        initARSession()
     }
 }

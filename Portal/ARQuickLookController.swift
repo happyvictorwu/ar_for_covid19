@@ -4,6 +4,14 @@ import UIKit
 class ARQuickLookController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
     @IBOutlet weak var tableView: UITableView!
     
+    
+    @IBAction func btnToReadWorld(_ sender: Any) {
+        let realBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let PortalCV = realBoard.instantiateViewController(withIdentifier: "PortalCV") as! PortalViewController
+        PortalCV.modalPresentationStyle = .fullScreen
+        self.present(PortalCV, animated:true, completion:nil)
+    }
+    
     let modelNames = ["COVID-19-1", "COVID-19-2", "COVID-19-struct"]
     var modelImages = [UIImage]()
     var modelIndex = 0
@@ -47,7 +55,7 @@ class ARQuickLookController: UIViewController, UITableViewDataSource, UITableVie
         let previewController = QLPreviewController()
         previewController.dataSource = self
         previewController.delegate = self
-        present(previewController, animated: false)
+        present(previewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -57,7 +65,7 @@ class ARQuickLookController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - QLPreviewControllerDataSource
     
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-        return 2
+        return 1
     }
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
