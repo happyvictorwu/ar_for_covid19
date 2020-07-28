@@ -24,6 +24,12 @@ class PortalViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let hit = sceneView?.hitTest(self.focusPoint, types: [.existingPlaneUsingExtent]).first {
+            sceneView?.session.add(anchor: ARAnchor(transform: hit.worldTransform))
+        }
+    }
+    
     // MARK: - Property
     var focusPoint:CGPoint!
     var focusNode: SCNNode!
@@ -31,10 +37,10 @@ class PortalViewController: UIViewController {
     var appState: State = .detectSurface
     var isPortalPlaced = false
     var debugPlanes: [SCNNode] = []
-    var viewCenter: CGPoint {
-        let viewBounds = view.bounds
-        return CGPoint(x: viewBounds.width / 2.0, y: viewBounds.height / 2.0)
-    }
+//    var viewCenter: CGPoint {
+//        let viewBounds = view.bounds
+//        return CGPoint(x: viewBounds.width / 2.0, y: viewBounds.height / 2.0)
+//    }
     
     let POSITION_Y: CGFloat = -0.25
     let POSITION_Z: CGFloat = -SURFACE_LENGTH * 0.5
@@ -86,15 +92,15 @@ class PortalViewController: UIViewController {
     
     func initSceneView() {
         sceneView.delegate = self
-        //sceneView.showsStatistics = true
-        #if DEBUG
-        sceneView.debugOptions = [
-            ARSCNDebugOptions.showFeaturePoints,
-            ARSCNDebugOptions.showWorldOrigin,
-            SCNDebugOptions.showBoundingBoxes,
-            SCNDebugOptions.showWireframe
-        ]
-        #endif
+        sceneView.showsStatistics = true
+//        #if DEBUG
+//        sceneView.debugOptions = [
+//            ARSCNDebugOptions.showFeaturePoints,
+//            ARSCNDebugOptions.showWorldOrigin,
+//            SCNDebugOptions.showBoundingBoxes,
+//            SCNDebugOptions.showWireframe
+//        ]
+//        #endif
         
         focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
         NotificationCenter.default.addObserver(self, selector: #selector(PortalViewController.orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -176,19 +182,13 @@ class PortalViewController: UIViewController {
         debugPlanes = []
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let hit = sceneView?.hitTest(viewCenter, types: [.existingPlaneUsingExtent]).first {
-            sceneView?.session.add(anchor: ARAnchor(transform: hit.worldTransform))
-        }
-    }
-    
     func makePortal() -> SCNNode {
         let portal = SCNNode()
         
-        let nScene = SCNScene(named: "Assets.scnassets/VirusScene.scn")!
-        let nNode = nScene.rootNode.childNode(withName: "virus3", recursively: true)!
-        nNode.position = SCNVector3(0, POSITION_Y + 0.5, POSITION_Z)
-        portal.addChildNode(nNode)
+//        let nScene = SCNScene(named: "Assets.scnassets/VirusScene.scn")!
+//        let nNode = nScene.rootNode.childNode(withName: "virus3", recursively: true)!
+//        nNode.position = SCNVector3(0, POSITION_Y + 0.5, POSITION_Z)
+//        portal.addChildNode(nNode)
         
         let floorNode = makeFloorNode()
         floorNode.position = SCNVector3(0, POSITION_Y, POSITION_Z)
@@ -258,7 +258,7 @@ extension PortalViewController: ARSCNViewDelegate {
                 self.debugPlanes.append(debugPlaneNode)
                 #endif
                 self.messageLabel?.alpha = 1.0
-                self.messageLabel?.text = "Tap on the detected horizontal plane to place the portal"
+                self.messageLabel?.text = "Tap on the detected horizontal plane to place the room"
             } else if self.appState == .detectSurface {   // this must be the anchor you add when the user taps on the screen to place the portal.
                 self.portalNode = self.makePortal()
                 if let portal = self.portalNode {
@@ -286,9 +286,13 @@ extension PortalViewController: ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if (self.appState != .detectSurface) {
+            self.focusNode.isHidden = false
+            return
+        }
         DispatchQueue.main.async {
             self.updateFocusNode()
-            if let _ = self.sceneView?.hitTest(self.viewCenter, types: [.existingPlaneUsingExtent]).first {
+            if let _ = self.sceneView.hitTest(self.focusPoint, types: [.existingPlaneUsingExtent]).first {
                 self.focusNode.isHidden = false
             } else {
                 self.focusNode.isHidden = true

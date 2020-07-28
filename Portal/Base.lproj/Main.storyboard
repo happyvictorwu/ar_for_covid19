@@ -49,7 +49,7 @@
                                 <color key="textColor" red="0.33134185109315417" green="0.19777470780038203" blue="0.92935490610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8W2-Uu-bQu" userLabel="Crosshair">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8W2-Uu-bQu" userLabel="Crosshair">
                                 <rect key="frame" x="202" y="443" width="10" height="10"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
