@@ -3,6 +3,14 @@ import UIKit
 
 class PortalViewController: UIViewController {
     
+    // MARK: - State
+    
+    enum State: Int16 {
+        case detectSurface  // Scan playable surface (Plane Detection On)
+        case pointToSurface // Point to surface to see focus point (Plane Detection Off)
+        case swipeToPlay    // Focus point visible on surface, swipe up to play
+    }
+
     // MARK: - Outlets
     
     @IBOutlet var crosshair: UIView!
@@ -20,6 +28,7 @@ class PortalViewController: UIViewController {
     var focusPoint:CGPoint!
     var focusNode: SCNNode!
     var portalNode: SCNNode?
+    var appState: State = .detectSurface
     var isPortalPlaced = false
     var debugPlanes: [SCNNode] = []
     var viewCenter: CGPoint {
@@ -42,8 +51,7 @@ class PortalViewController: UIViewController {
         initSceneView()
         initScene()
         initARSession()
-        let focusScene = SCNScene(
-            named: "Assets.scnassets/FocusScene.scn")!
+        let focusScene = SCNScene(named: "Assets.scnassets/FocusScene.scn")!
         focusNode = focusScene.rootNode.childNode(
             withName: "focus", recursively: false)!
         
@@ -116,7 +124,7 @@ class PortalViewController: UIViewController {
     // MARK: - Helper function
     
     func updateFocusNode() {
-        if (self.isPortalPlaced) {
+        if (self.appState != .detectSurface) {
             return
         }
         
@@ -157,7 +165,8 @@ class PortalViewController: UIViewController {
     func removeAllNodes() {
         removeDebugPlanes()
         portalNode?.removeFromParentNode()
-        isPortalPlaced = false
+        appState = .detectSurface
+//        isPortalPlaced = false
     }
     
     func removeDebugPlanes() {
@@ -242,7 +251,7 @@ class PortalViewController: UIViewController {
 extension PortalViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         DispatchQueue.main.async {
-            if let planeAnchor = anchor as? ARPlaneAnchor, !self.isPortalPlaced {
+            if let planeAnchor = anchor as? ARPlaneAnchor, self.appState == .detectSurface {
                 #if DEBUG
                 let debugPlaneNode = createPlaneNode(center: planeAnchor.center, extent: planeAnchor.extent)
                 node.addChildNode(debugPlaneNode)
@@ -250,11 +259,11 @@ extension PortalViewController: ARSCNViewDelegate {
                 #endif
                 self.messageLabel?.alpha = 1.0
                 self.messageLabel?.text = "Tap on the detected horizontal plane to place the portal"
-            } else if !self.isPortalPlaced {   // this must be the anchor you add when the user taps on the screen to place the portal.
+            } else if self.appState == .detectSurface {   // this must be the anchor you add when the user taps on the screen to place the portal.
                 self.portalNode = self.makePortal()
                 if let portal = self.portalNode {
                     node.addChildNode(portal)
-                    self.isPortalPlaced = true
+                    self.appState = .swipeToPlay
                     
                     self.removeDebugPlanes()
                     self.sceneView?.debugOptions = []
@@ -270,7 +279,7 @@ extension PortalViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         DispatchQueue.main.async {
-            if let planeAnchor = anchor as? ARPlaneAnchor, node.childNodes.count > 0, !self.isPortalPlaced {
+            if let planeAnchor = anchor as? ARPlaneAnchor, node.childNodes.count > 0, self.appState == .detectSurface {
                 updatePlaneNode(node.childNodes[0], center: planeAnchor.center, extent: planeAnchor.extent)
             }
         }
