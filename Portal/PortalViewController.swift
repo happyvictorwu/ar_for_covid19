@@ -17,7 +17,8 @@ class PortalViewController: UIViewController {
     }
     
     // MARK: - Property
-    
+    var focusPoint:CGPoint!
+    var focusNode: SCNNode!
     var portalNode: SCNNode?
     var isPortalPlaced = false
     var debugPlanes: [SCNNode] = []
@@ -41,6 +42,12 @@ class PortalViewController: UIViewController {
         initSceneView()
         initScene()
         initARSession()
+        let focusScene = SCNScene(
+            named: "Assets.scnassets/FocusScene.scn")!
+        focusNode = focusScene.rootNode.childNode(
+            withName: "focus", recursively: false)!
+        
+        sceneView.scene.rootNode.addChildNode(focusNode)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +69,11 @@ class PortalViewController: UIViewController {
         return true
     }
     
+    @objc
+    func orientationChanged() {
+        focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
+    }
+    
     // MARK: - Initialization
     
     func initSceneView() {
@@ -76,8 +88,8 @@ class PortalViewController: UIViewController {
         ]
         #endif
         
-//        focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
-//        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
+        focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
+        NotificationCenter.default.addObserver(self, selector: #selector(PortalViewController.orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     func initScene() {
@@ -99,6 +111,28 @@ class PortalViewController: UIViewController {
         config.planeDetection = .horizontal
         config.isLightEstimationEnabled = true
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    // MARK: - Helper function
+    
+    func updateFocusNode() {
+        if (self.isPortalPlaced) {
+            return
+        }
+        
+        let results = self.sceneView.hitTest(self.focusPoint, types: [.existingPlaneUsingExtent])
+        
+        if results.count == 1 {
+            if let match = results.first {
+                let t = match.worldTransform
+                self.focusNode.position = SCNVector3(x: t.columns.3.x, y: t.columns.3.y, z: t.columns.3.z)
+//                self.gameState = .swipeToPlay
+                focusNode.isHidden = false
+            }
+        } else {
+//            self.gameState = .pointToSurface
+            focusNode.isHidden = true
+        }
     }
     
     func resetLabels() {
@@ -244,10 +278,11 @@ extension PortalViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
+            self.updateFocusNode()
             if let _ = self.sceneView?.hitTest(self.viewCenter, types: [.existingPlaneUsingExtent]).first {
-                self.crosshair.backgroundColor = UIColor.green
+                self.focusNode.isHidden = false
             } else {
-                self.crosshair.backgroundColor = UIColor.lightGray
+                self.focusNode.isHidden = true
             }
         }
     }
