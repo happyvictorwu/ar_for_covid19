@@ -56,7 +56,6 @@ class PortalViewController: UIViewController {
         
         initSceneView()
         initScene()
-        initARSession()
         let focusScene = SCNScene(named: "Assets.scnassets/FocusScene.scn")!
         focusNode = focusScene.rootNode.childNode(
             withName: "focus", recursively: false)!
@@ -66,6 +65,7 @@ class PortalViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        initARSession()
         print("*** ViewWillAppear()")
     }
     
@@ -182,13 +182,59 @@ class PortalViewController: UIViewController {
         debugPlanes = []
     }
     
+    // MARK: - Make model
+    
+    func makeVideo() -> SCNNode {
+        let node = SCNNode()
+        
+        let videoNode = SKVideoNode(fileNamed: "harrypotter.mp4")
+        
+        videoNode.play()
+        
+        let videoScene = SKScene(size: CGSize(width: 480, height: 360))
+        videoScene.scaleMode = .aspectFit
+        
+        
+        videoNode.position = CGPoint(x: videoScene.size.width / 2, y: videoScene.size.height / 2)
+        videoNode.size = videoScene.size
+        videoScene.backgroundColor = .clear
+        videoNode.yScale = -1.0
+        
+        videoScene.addChild(videoNode)
+        
+        
+        let plane = SCNPlane(width: CGFloat(0.11866), height: CGFloat(0.076))
+//        let plane = SCNPlane(width: videoScene.size.width / 2, height: videoScene.size.height / 2)
+        
+        plane.firstMaterial?.diffuse.contents = videoScene
+        
+        let planeNode = SCNNode(geometry: plane)
+        
+//        planeNode.eulerAngles.x = .pi
+        
+        node.addChildNode(planeNode)
+        
+        return node
+    }
+    
     func makePortal() -> SCNNode {
         let portal = SCNNode()
         
-//        let nScene = SCNScene(named: "Assets.scnassets/VirusScene.scn")!
-//        let nNode = nScene.rootNode.childNode(withName: "virus3", recursively: true)!
-//        nNode.position = SCNVector3(0, POSITION_Y + 0.5, POSITION_Z)
-//        portal.addChildNode(nNode)
+        var virusNodes: [SCNNode] = []
+        for i in 0...3 {
+            virusNodes.append(makeVirusNode(sceneName: "Assets.scnassets/VirusScene.scn", withName: "virus\(i)"))
+        }
+        virusNodes[0].position = SCNVector3(0.7, POSITION_Y + 1.7, POSITION_Z + 0.7)
+        portal.addChildNode(virusNodes[0])
+
+        virusNodes[1].position = SCNVector3(0, POSITION_Y + 1.5, POSITION_Z + 0.9)
+        portal.addChildNode(virusNodes[1])
+        
+        virusNodes[2].position = SCNVector3(-0.7, POSITION_Y + 1.7, POSITION_Z + 0.7)
+        portal.addChildNode(virusNodes[2])
+        
+        virusNodes[3].position = SCNVector3(0, POSITION_Y + 0.5, POSITION_Z)
+        portal.addChildNode(virusNodes[3])
         
         let floorNode = makeFloorNode()
         floorNode.position = SCNVector3(0, POSITION_Y, POSITION_Z)
