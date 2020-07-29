@@ -4,13 +4,20 @@ import UIKit
 class ARQuickLookController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
     @IBOutlet weak var tableView: UITableView!
     
-    
     @IBAction func btnToReadWorld(_ sender: Any) {
-        let realBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let PortalCV = realBoard.instantiateViewController(withIdentifier: "PortalCV") as! PortalViewController
+        let mainBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let PortalCV = mainBoard.instantiateViewController(withIdentifier: "PortalCV") as! PortalViewController
         PortalCV.modalPresentationStyle = .fullScreen
         self.present(PortalCV, animated:true, completion:nil)
     }
+    
+    @IBAction func btnToImageDetect(_ sender: Any) {
+        let mainBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let imageDetectCV = mainBoard.instantiateViewController(withIdentifier: "ImageDetectCV") as! ImageDetectController
+        imageDetectCV.modalPresentationStyle = .fullScreen
+        self.present(imageDetectCV, animated:true, completion:nil)
+    }
+    
     
     let modelNames = ["COVID-19-1", "COVID-19-2", "COVID-19-struct"]
     var modelImages = [UIImage]()
