@@ -1,11 +1,3 @@
-//
-//  GalleryTableViewCell.swift
-//  PutSomethingUsingAR
-//
-//  Created by Victor Wu on 2019/4/23.
-//  Copyright © 2019 Victor Wu. All rights reserved.
-//
-
 import UIKit
 
 class GalleryTableViewCell: UITableViewCell {

@@ -287,7 +287,7 @@ class PortalViewController: UIViewController {
     
     func placeLightSource(rootNode: SCNNode) {
         let light = SCNLight()
-        light.intensity = 10
+        light.intensity = 30
         light.type = .omni
         let lightNode = SCNNode()
         lightNode.light = light
